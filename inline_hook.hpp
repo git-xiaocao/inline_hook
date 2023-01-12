@@ -1,3 +1,7 @@
+// Repository: https://github.com/git-xiaocao/inline_hook
+// Author: 小草
+// Date: 2023/1/12
+
 #pragma once
 
 #include <Windows.h>
