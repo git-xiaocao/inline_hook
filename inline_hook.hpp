@@ -1,6 +1,6 @@
 // Repository: https://github.com/git-xiaocao/inline_hook
 // Author: 小草
-// Date: 2023/1/12
+// Date: 2023/1/16
 
 #pragma once
 
@@ -8,7 +8,8 @@
 #include <functional>
 #ifdef _WIN64
 // mov rax, addr
-// jmp rax
+// push rax,
+// ret
 constexpr SIZE_T byte_code_length = 2 + 2 + sizeof(LONG_PTR);//12
 #else
 // jmp addr
@@ -55,9 +56,10 @@ public:
 
 		*(PLONG_PTR)(jmp_bytes_ + 2) = self_address_;
 
-		//jmp rax
-		*(PBYTE)(jmp_bytes_ + 2 + sizeof(self_address_)) = 0xFF;
-		*(PBYTE)(jmp_bytes_ + 2 + sizeof(LONG_PTR) + 1) = 0xE0;
+		//push rax
+		//ret
+		*(PBYTE)(jmp_bytes_ + 2 + sizeof(self_address_)) = 0x50;
+		*(PBYTE)(jmp_bytes_ + 2 + sizeof(LONG_PTR) + 1) = 0xC3;
 #else
 		//计算偏移
 		LONG_PTR offset = self_address_ - (original_address_ + byte_code_length);
